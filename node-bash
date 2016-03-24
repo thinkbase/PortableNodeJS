@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Shell for portable node/npm
+# 2016/03/24 by thinkbase.net@gmail.com
+
+if [ -z $BASH ]; then
+    echo "This shell script MUST run under bash."
+    exit -1
+fi
+_script="$(readlink -f "${BASH_SOURCE[0]}")"
+_script_dir="$(dirname "$_script")"
+# echo "Directory of $_script : $_script_dir"
+
+export PATH="${_script_dir}/scripts:${_script_dir}/scripts/inst/bin/npm-global/bin:${PATH}"
+
+# Text color variables
+txtund=$(tput sgr 0 1)          # Underline
+txtbld=$(tput bold)             # Bold
+bldred=${txtbld}$(tput setaf 1) #  red
+bldblu=${txtbld}$(tput setaf 4) #  blue
+bldwht=${txtbld}$(tput setaf 7) #  white
+txtrst=$(tput sgr0)             # Reset
+
+echo -e "${bldblu} +=======${txtrst}${bldred} PortableNodeJS ${txtrst}${bldblu}=======+ ${txtrst}"
+echo -e "${bldblu} |                              | ${txtrst}"
+echo -e "${bldblu} |               @thinkbase.net | ${txtrst}"
+echo -e "${bldblu} +==============================+ ${txtrst}"
+
+export PS1_GREEN="\[$(tput bold)$(tput setaf 2)\]"
+export PS1_RESET="\[$(tput sgr0)\]"
+export PROMPT_COMMAND='PS1="${PS1_GREEN}[NodeJS]\n  ${PS1_RESET}\w${PS1_GREEN}> ${PS1_RESET}"'
+
+bash
+
