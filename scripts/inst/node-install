@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Portable Node.js install script
+# 2016/03/24 by thinkbase.net@gmail.com
+
+NODE_VERSION="v5.9.1"
+
+if [ -z $BASH ]; then
+    echo "This shell script MUST run under bash."
+    exit -1
+fi
+_script="$(readlink -f "${BASH_SOURCE[0]}")"
+_script_dir="$(dirname "$_script")"
+# echo "Directory of $_script : $_script_dir"
+
+die() {
+    echo >&2 "Error: $@"
+    exit 1
+}
+
+if type -p curl > /dev/null; then
+    download() {
+	    echo "Download: $2 to: $1"
+	    curl -o "$2" "$1" && [ -e "$2" ]
+    }
+elif type -p wget > /dev/null; then
+    download() {
+	    echo "Download: $2 to: $1"
+	    wget -O "$2" "$1" && [ -e "$2" ]
+    }
+else
+    die "No download tool found, please install wget or curl"
+fi
+
+BIN_DIR="${_script_dir}/bin"
+TMP_DIR="${_script_dir}/tmp"
+
+NODE_VERSION_ID="node-${NODE_VERSION}-linux-x64"
+NODE_RUNTIME_DIR="${BIN_DIR}/${NODE_VERSION_ID}"
+
+set -o nounset
+set -o errexit
+
+if [ ! -f "${NODE_RUNTIME_DIR}/bin/node" ]
+then
+    echo "Node.js installation not found, begin to install ..."
+    mkdir -p "${TMP_DIR}"
+    if [ ! -f "${TMP_DIR}/${NODE_VERSION_ID}.tar.gz" ]
+    then
+        download https://nodejs.org/dist/${NODE_VERSION}/${NODE_VERSION_ID}.tar.gz "${TMP_DIR}/${NODE_VERSION_ID}.tar.gz"
+    else
+        echo "Use downloaded node package: ${TMP_DIR}/${NODE_VERSION_ID}.tar.gz ..."
+    fi
+    if [ -d "${NODE_RUNTIME_DIR}" ]
+    then
+        echo "Clean install folder: ${NODE_RUNTIME_DIR}"
+        rm -rf "${NODE_RUNTIME_DIR}"
+    fi
+    mkdir -p "${BIN_DIR}"
+    pushd "${BIN_DIR}" >/dev/null
+    tar xzf "${TMP_DIR}/${NODE_VERSION_ID}.tar.gz"
+    popd >/dev/null
+    echo "Node.js installed at ${NODE_RUNTIME_DIR} ."
+else
+    echo "Node.js already installed at ${NODE_RUNTIME_DIR} ."
+fi
+
