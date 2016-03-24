@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Portable npm
+# 2016/03/24 by thinkbase.net@gmail.com
+
+if [ -z $BASH ]; then
+    echo "This shell script MUST run under bash."
+    exit -1
+fi
+_script="$(readlink -f "${BASH_SOURCE[0]}")"
+_script_dir="$(dirname "$_script")"
+# echo "Directory of $_script : $_script_dir"
+
+set -o nounset
+set -o errexit
+
+source "${_script_dir}/inst/node-install"
+
+# prepare portable npmrc
+echo "prefix = ${BIN_DIR}/npm-global"               >  "${NODE_RUNTIME_DIR}/lib/node_modules/npm/npmrc"
+echo "cache = ${BIN_DIR}/npm-cache"                 >> "${NODE_RUNTIME_DIR}/lib/node_modules/npm/npmrc"
+echo "registry = https://registry.npm.taobao.org"   >> "${NODE_RUNTIME_DIR}/lib/node_modules/npm/npmrc"
+
+# Start ...
+"${NODE_RUNTIME_DIR}/bin/node" "${NODE_RUNTIME_DIR}/lib/node_modules/npm/bin/npm-cli.js" $@
+
