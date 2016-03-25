@@ -38,6 +38,9 @@ TMP_DIR="${_script_dir}/tmp"
 NODE_VERSION_ID="node-${NODE_VERSION}-linux-x64"
 NODE_RUNTIME_DIR="${BIN_DIR}/${NODE_VERSION_ID}"
 
+# Hide the absolute path with replace home path to "~"
+NODE_RUNTIME_DIR2SHOW="${NODE_RUNTIME_DIR//$HOME//~}"
+
 set -o nounset
 set -o errexit
 
@@ -61,7 +64,12 @@ then
     tar xzf "${TMP_DIR}/${NODE_VERSION_ID}.tar.gz"
     popd >/dev/null
     echo "Node.js installed at ${NODE_RUNTIME_DIR} ."
-else
-    echo "Node.js already installed at ${NODE_RUNTIME_DIR} ."
 fi
 
+txtund=$(tput sgr 0 1)          # Underline
+txtbld=$(tput bold)             # Bold
+bldgre=${txtbld}$(tput setaf 2) # Bold green
+txtblu=$(tput setaf 4)          # Normal blue
+txtrst=$(tput sgr0)             # Reset
+
+echo -e "\n${bldgre}Node.js${txtrst} already installed at ${txtblu}${NODE_RUNTIME_DIR2SHOW}${txtrst} .\n"

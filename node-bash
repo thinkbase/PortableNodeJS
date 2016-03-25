@@ -28,7 +28,8 @@ echo -e "${bldblu} +==============================+ ${txtrst}"
 
 export PS1_GREEN="\[$(tput bold)$(tput setaf 2)\]"
 export PS1_RESET="\[$(tput sgr0)\]"
-export PROMPT_COMMAND='PS1="${PS1_GREEN}[NodeJS]\n  ${PS1_RESET}\w${PS1_GREEN}> ${PS1_RESET}"'
+# export PROMPT_COMMAND='PS1="${PS1_GREEN}[NodeJS]\n  ${PS1_RESET}\w${PS1_GREEN}> ${PS1_RESET}"'
+export PROMPT_COMMAND='PS1="${PS1_GREEN}[NodeJS] ${PS1_RESET}\W${PS1_GREEN} > ${PS1_RESET}"'
 
 bash
 
