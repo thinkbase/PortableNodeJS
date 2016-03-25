@@ -11,7 +11,7 @@ _script="$(readlink -f "${BASH_SOURCE[0]}")"
 _script_dir="$(dirname "$_script")"
 # echo "Directory of $_script : $_script_dir"
 
-export PATH="${_script_dir}/scripts:${_script_dir}/scripts/inst/bin/npm-global/bin:${PATH}"
+export PATH="./node_modules/.bin:${_script_dir}/scripts:${_script_dir}/scripts/inst/bin/npm-global/bin:${PATH}"
 
 # Text color variables
 txtund=$(tput sgr 0 1)          # Underline
