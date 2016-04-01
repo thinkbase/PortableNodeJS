@@ -2,6 +2,7 @@
 
 # Portable Node.js install script
 # 2016/03/24 by thinkbase.net@gmail.com
+# Reference: https://github.com/dmrub/portable-node/blob/master/bin/install-node.sh
 
 NODE_VERSION="v5.9.1"
 
