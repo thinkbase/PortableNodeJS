@@ -73,4 +73,4 @@ bldgre=${txtbld}$(tput setaf 2) # Bold green
 txtblu=$(tput setaf 4)          # Normal blue
 txtrst=$(tput sgr0)             # Reset
 
-echo -e "\n${bldgre}Node.js${txtrst} already installed at ${txtblu}${NODE_RUNTIME_DIR2SHOW}${txtrst} .\n"
+echo -e "\n${bldgre}Node.js${txtrst} already installed at ${txtblu}${NODE_RUNTIME_DIR2SHOW}${txtrst} .\n" >&2
