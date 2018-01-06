@@ -2,7 +2,7 @@
 ' 2016/03/24 by thinkbase.net@gmail.com
 ' Reference: https://github.com/dmrub/portable-node/blob/master/bin/install-node.vbs
 
-NODE_VERSION="v6.11.1"
+NODE_VERSION="v8.9.4"
 
 ' Declare all global variables
 Dim FSO, WshShell, WshEnv, thisDir, VERBOSE
